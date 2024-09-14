@@ -1,6 +1,6 @@
-#include "Date.h"
+п»ї#include "Date.h"
 
-// Конструкторы
+// РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
 Date::Date() : year(2000), month(1), day(1) {}
 
 Date::Date(int y, int m, int d) {
@@ -12,20 +12,20 @@ Date::Date(int y, int m, int d) {
 
 Date::Date(const Date& other) : year(other.year), month(other.month), day(other.day) {}
 
-// Проверка даты
+// РџСЂРѕРІРµСЂРєР° РґР°С‚С‹
 void Date::validateDate(int y, int m, int d) const noexcept {
     if (m < 1 || m > 12) {
-        throw std::invalid_argument("Некорректный месяц");
+        throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РјРµСЃСЏС†");
     }
 
     int daysInMonth[] = { 31, (isLeapYear() ? 29 : 28), 31, 30, 31, 30,  31, 31, 30, 31, 30, 31 };
 
     if (d < 1 || d > daysInMonth[m - 1]) {
-        throw std::invalid_argument("Некорректный день");
+        throw std::invalid_argument("РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РґРµРЅСЊ");
     }
 }
 
-// Инициализация
+// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ
 void Date::Init(int y, int m, int d) {
     validateDate(y, m, d);
     year = y;
@@ -39,10 +39,10 @@ void Date::Init(const Date& other) {
     day = other.day;
 }
 
-// Ввод/вывод
+// Р’РІРѕРґ/РІС‹РІРѕРґ
 void Date::Read() {
     int y, m, d;
-    std::cout << "Введите дату (год месяц день): ";
+    std::cout << "Р’РІРµРґРёС‚Рµ РґР°С‚Сѓ (РіРѕРґ РјРµСЃСЏС† РґРµРЅСЊ): ";
     std::cin >> y >> m >> d;
     Init(y, m, d);
 }
@@ -55,22 +55,22 @@ std::string Date::toString() const noexcept {
     return std::to_string(year) + "." + std::to_string(month) + "." + std::to_string(day);
 }
 
-// Геттеры
+// Р“РµС‚С‚РµСЂС‹
 int Date::getYear() const noexcept { return year; }
 int Date::getMonth() const noexcept { return month; }
 int Date::getDay() const noexcept { return day; }
 
-// Сеттеры
+// РЎРµС‚С‚РµСЂС‹
 void Date::setYear(int y) { validateDate(y, month, day); year = y; }
 void Date::setMonth(int m) { validateDate(year, m, day); month = m; }
 void Date::setDay(int d) { validateDate(year, month, d); day = d; }
 
-// Проверка високосного года
+// РџСЂРѕРІРµСЂРєР° РІРёСЃРѕРєРѕСЃРЅРѕРіРѕ РіРѕРґР°
 bool Date::isLeapYear() const noexcept {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
-// Добавление дней к дате
+// Р”РѕР±Р°РІР»РµРЅРёРµ РґРЅРµР№ Рє РґР°С‚Рµ
 Date Date::addDays(int days) const noexcept {
     Date newDate(*this);
 
@@ -96,7 +96,7 @@ Date Date::addDays(int days) const noexcept {
     return newDate;
 }
 
-// Вычитание дней из даты
+// Р’С‹С‡РёС‚Р°РЅРёРµ РґРЅРµР№ РёР· РґР°С‚С‹
 Date Date::subtractDays(int days) const noexcept {
     Date newDate(*this);
 
@@ -118,7 +118,7 @@ Date Date::subtractDays(int days) const noexcept {
     return newDate;
 }
 
-// Сравнение дат
+// РЎСЂР°РІРЅРµРЅРёРµ РґР°С‚
 bool Date::operator==(const Date& other) const noexcept {
     return year == other.year && month == other.month && day == other.day;
 }
@@ -137,16 +137,16 @@ bool Date::operator>(const Date& other) const noexcept {
     return other < *this;
 }
 
-// Количество дней между датами
+// РљРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ РјРµР¶РґСѓ РґР°С‚Р°РјРё
 int Date::daysBetween(const Date& other) const noexcept {
     
 
-    int totalDays1 = year * 365 + day; // Простая оценка
+    int totalDays1 = year * 365 + day; // РџСЂРѕСЃС‚Р°СЏ РѕС†РµРЅРєР°
     for (int i = 1; i < month; ++i) {
         totalDays1 += (i == 2 && isLeapYear()) ? 29 : ((i == 4 || i == 6 || i == 9 || i == 11) ? 30 : 31);
     }
 
-    int totalDays2 = other.year * 365 + other.day; // Простая оценка
+    int totalDays2 = other.year * 365 + other.day; // РџСЂРѕСЃС‚Р°СЏ РѕС†РµРЅРєР°
     for (int i = 1; i < other.month; ++i) {
         totalDays2 += (i == 2 && other.isLeapYear()) ? 29 : ((i == 4 || i == 6 || i == 9 || i == 11) ? 30 : 31);
     }
